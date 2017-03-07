@@ -37,8 +37,7 @@ class Hook : public QObject
 {
     Q_OBJECT
 public:
-    explicit Hook(QObject *parent = 0);
-    Hook(com::ubuntu::content::detail::PeerRegistry *registry, QObject *parent = 0);
+    Hook(const QSharedPointer<com::ubuntu::content::detail::PeerRegistry>& registry, QObject *parent = 0);
     ~Hook();
 
 public Q_SLOTS:
@@ -47,7 +46,7 @@ public Q_SLOTS:
     bool add_peer(QFileInfo);
 
 private:
-    com::ubuntu::content::detail::PeerRegistry* registry;
+    const QSharedPointer<com::ubuntu::content::detail::PeerRegistry>& registry;
     
 };
 }

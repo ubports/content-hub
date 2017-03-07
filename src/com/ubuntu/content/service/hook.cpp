@@ -29,25 +29,19 @@
 #include "debug.h"
 #include "hook.h"
 
+namespace cuc = com::ubuntu::content;
 namespace cucd = com::ubuntu::content::detail;
 
-cucd::Hook::Hook(QObject *parent) :
-    QObject(parent),
-    registry(new Registry())
-{
-    QTimer::singleShot(200, this, SLOT(run()));
-}
-
-cucd::Hook::Hook(com::ubuntu::content::detail::PeerRegistry *registry, QObject *parent) :
+cucd::Hook::Hook(const QSharedPointer<cucd::PeerRegistry>& registry, QObject *parent) :
     QObject(parent),
     registry(registry)
 {
+    QTimer::singleShot(200, this, SLOT(run()));
 }
 
 cucd::Hook::~Hook()
 {
     TRACE() << Q_FUNC_INFO;
-    delete registry;
 }
 
 void cucd::Hook::run()
@@ -78,7 +72,7 @@ void cucd::Hook::run()
     contentDirs.append(QDir("/usr/share/local/content-hub/peers/"));
 
     QStringList all_peers;
-    registry->enumerate_known_peers([&all_peers](const com::ubuntu::content::Peer& peer)
+    registry->enumerate_known_peers([&all_peers](const cuc::Peer& peer)
                                     {
                                         all_peers.append(peer.id());
                                     });
@@ -95,7 +89,7 @@ void cucd::Hook::run()
             }
         }
         if(!foundPeer) {
-            registry->remove_peer(com::ubuntu::content::Peer{p});
+            registry->remove_peer(cuc::Peer{p});
         }
     }
 

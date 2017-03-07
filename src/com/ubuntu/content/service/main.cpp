@@ -24,6 +24,7 @@
 #include "detail/app_manager.h"
 #include "debug.h"
 #include "common.h"
+#include "hook.h"
 #include "registry.h"
 #include "detail/i18n.h"
 #include "detail/service.h"
@@ -62,6 +63,8 @@ int main(int argc, char** argv)
     auto connection = QDBusConnection::sessionBus();
 
     auto registry = QSharedPointer<cucd::PeerRegistry>(new Registry());
+
+    auto hook = new cuc::detail::Hook(registry);
 
     auto app_manager = QSharedPointer<cuca::ApplicationManager>(new cucd::AppManager());
 

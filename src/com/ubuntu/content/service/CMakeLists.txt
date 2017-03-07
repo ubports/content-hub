@@ -35,10 +35,17 @@ add_executable(
   content-hub-service
 
   main.cpp
+  hook.cpp
   registry.cpp
   ../debug.cpp
   ../utils.cpp
   ${CONTENT_SERVICE_SKELETON}
+)
+
+set_target_properties(
+  content-hub-service
+  PROPERTIES
+  AUTOMOC TRUE
 )
 
 qt5_use_modules(content-hub-service Core DBus Gui)
@@ -68,60 +75,6 @@ install(
 ###########################
 
 add_schema ("com.ubuntu.content.hub.gschema.xml")
-
-add_executable(
-  content-hub-peer-hook
-
-  helper.cpp
-  registry.cpp
-  hook.cpp
-)
-
-qt5_use_modules(content-hub-peer-hook Core Gui DBus)
-
-target_link_libraries(
-  content-hub-peer-hook
- 
-  content-hub
-  ${GSETTINGS_LDFLAGS}
-  ${UBUNTU_LAUNCH_LDFLAGS}
-)
-
-configure_file("content-hub-peer-hook-wrapper.in"
-  "content-hub-peer-hook-wrapper"
-  @ONLY
-)
-
-install(
-  PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/content-hub-peer-hook-wrapper"
-  DESTINATION "${CMAKE_INSTALL_FULL_LIBEXECDIR}/content-hub"
-)
-
-install(
-  TARGETS content-hub-peer-hook
-  RUNTIME DESTINATION "${CMAKE_INSTALL_FULL_LIBEXECDIR}/content-hub"
-)
-
-set_target_properties(
-  content-hub-peer-hook
-  PROPERTIES
-  AUTOMOC TRUE
-)
-
-set(CLICK_HOOK
-"${CMAKE_CURRENT_BINARY_DIR}/content-hub.hook"
-)
-
-configure_file("content-hub.hook.in"
-  "${CLICK_HOOK}"
-  @ONLY
-)
-
-install(
-FILES
-"${CLICK_HOOK}"
-DESTINATION "/usr/share/click/hooks"
-)
 
 install(
   FILES xorg.png
