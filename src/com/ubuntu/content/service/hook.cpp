@@ -112,7 +112,6 @@ void cucd::Hook::run()
         return_error("No peer setting directories exist.");
 
     deleteLater();
-    QCoreApplication::instance()->quit();
 }
 
 bool cucd::Hook::add_peer(QFileInfo result)
