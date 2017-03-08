@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Canonical, Ltd.
+ * Copyright (C) 2013-2017 Canonical, Ltd.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,12 +28,12 @@
 #include <com/ubuntu/content/peer.h>
 
 #include "debug.h"
-#include "hook.h"
+#include "registry-updater.h"
 
 namespace cuc = com::ubuntu::content;
 namespace cucd = com::ubuntu::content::detail;
 
-cucd::Hook::Hook(const QSharedPointer<cucd::PeerRegistry>& registry, QObject *parent) :
+cucd::RegistryUpdater::RegistryUpdater(const QSharedPointer<cucd::PeerRegistry>& registry, QObject *parent) :
     QObject(parent),
     registry(registry),
     watcher(new QFileSystemWatcher)
@@ -48,7 +48,7 @@ cucd::Hook::Hook(const QSharedPointer<cucd::PeerRegistry>& registry, QObject *pa
      *     ]
      * }
      *
-     * The hook also iterates known peers and removes them if there is
+     * The updater also iterates known peers and removes them if there is
      * no JSON file installed in this path.
      */
     contentDirs.append(QDir(
@@ -72,12 +72,12 @@ cucd::Hook::Hook(const QSharedPointer<cucd::PeerRegistry>& registry, QObject *pa
     QTimer::singleShot(200, this, SLOT(run()));
 }
 
-cucd::Hook::~Hook()
+cucd::RegistryUpdater::~RegistryUpdater()
 {
     TRACE() << Q_FUNC_INFO;
 }
 
-void cucd::Hook::refresh(const QString& dir)
+void cucd::RegistryUpdater::refresh(const QString& dir)
 {
     TRACE() << Q_FUNC_INFO << dir;
     bool shouldRefresh = true;
@@ -91,7 +91,7 @@ void cucd::Hook::refresh(const QString& dir)
         run();
 }
 
-void cucd::Hook::run()
+void cucd::RegistryUpdater::run()
 {
     TRACE() << Q_FUNC_INFO;
 
@@ -138,9 +138,9 @@ void cucd::Hook::run()
 
 }
 
-bool cucd::Hook::add_peer(QFileInfo result)
+bool cucd::RegistryUpdater::add_peer(QFileInfo result)
 {
-    TRACE() << Q_FUNC_INFO << "Hook:" << result.filePath();
+    TRACE() << Q_FUNC_INFO << "RegistryUpdater:" << result.filePath();
 
     QStringList knownTypes;
     knownTypes << "all" << "pictures" << "music" << "contacts" << "documents" << "videos" << "links" << "ebooks" << "text" << "events";
@@ -199,7 +199,7 @@ bool cucd::Hook::add_peer(QFileInfo result)
     return true;
 }
 
-bool cucd::Hook::return_error(QString err)
+bool cucd::RegistryUpdater::return_error(QString err)
 {
     qWarning() << "Failed to install peer" << err;
     return false;

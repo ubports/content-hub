@@ -20,7 +20,7 @@
 #include <QDir>
 #include <QStandardPaths>
 
-#include "hook.h"
+#include "registry-updater.h"
 #include "debug.h"
 
 namespace cuc = com::ubuntu::content;
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
             return 0;
     }
 
-    new cuc::detail::Hook();
+    new cuc::detail::RegistryUpdater();
 
     app.exec();
 

@@ -24,8 +24,8 @@
 #include "detail/app_manager.h"
 #include "debug.h"
 #include "common.h"
-#include "hook.h"
 #include "registry.h"
+#include "registry-updater.h"
 #include "detail/i18n.h"
 #include "detail/service.h"
 #include "detail/peer_registry.h"
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
 
     auto registry = QSharedPointer<cucd::PeerRegistry>(new Registry());
 
-    auto hook = new cuc::detail::Hook(registry);
+    auto updater = new cuc::detail::RegistryUpdater(registry);
 
     auto app_manager = QSharedPointer<cuca::ApplicationManager>(new cucd::AppManager());
 

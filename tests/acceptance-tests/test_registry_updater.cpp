@@ -19,7 +19,7 @@
 #include <com/ubuntu/content/peer.h>
 #include <com/ubuntu/content/type.h>
 #include "com/ubuntu/content/detail/peer_registry.h"
-#include "com/ubuntu/content/service/hook.h"
+#include "com/ubuntu/content/service/registry-updater.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -60,7 +60,7 @@ struct MockedRegistry : public cuc::detail::PeerRegistry
 };
 }
 
-TEST(Hook, parse_json)
+TEST(RegistryUpdater, parse_json)
 {
     using namespace ::testing;
     
@@ -71,12 +71,12 @@ TEST(Hook, parse_json)
 
     QFileInfo f("good.json");
     auto mock_ptr = QSharedPointer<cuc::detail::PeerRegistry>(mock);
-    cucd::Hook *hook = new cucd::Hook(mock_ptr);
+    cucd::RegistryUpdater *updater = new cucd::RegistryUpdater(mock_ptr);
 
-    EXPECT_TRUE(hook->add_peer(f));
+    EXPECT_TRUE(updater->add_peer(f));
     f.setFile("bad.json");
-    EXPECT_FALSE(hook->add_peer(f));
+    EXPECT_FALSE(updater->add_peer(f));
     f.setFile("source_all.json");
-    EXPECT_TRUE(hook->add_peer(f));
+    EXPECT_TRUE(updater->add_peer(f));
     mock_ptr.clear();
 }

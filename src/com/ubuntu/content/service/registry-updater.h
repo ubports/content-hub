@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Canonical, Ltd.
+ * Copyright (C) 2013-2017 Canonical, Ltd.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
  * Authored by: Ken VanDine <ken.vandine@canonical.com>
  */
 
-#ifndef HOOK_H
-#define HOOK_H
+#ifndef REGISTRY_UPDATER_H
+#define REGISTRY_UPDATER_H
 
 #include <QObject>
 #include <QFileInfo>
@@ -33,12 +33,12 @@ namespace content
 {
 namespace detail
 {
-class Hook : public QObject
+class RegistryUpdater : public QObject
 {
     Q_OBJECT
 public:
-    Hook(const QSharedPointer<com::ubuntu::content::detail::PeerRegistry>& registry, QObject *parent = 0);
-    ~Hook();
+    RegistryUpdater(const QSharedPointer<com::ubuntu::content::detail::PeerRegistry>& registry, QObject *parent = 0);
+    ~RegistryUpdater();
 
 public Q_SLOTS:
     bool return_error(QString err = "");
@@ -57,4 +57,4 @@ private:
 }
 }
 
-#endif // HOOK_H
+#endif // REGISTRY_UPDATER_H

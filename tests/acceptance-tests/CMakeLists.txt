@@ -63,25 +63,25 @@ foreach(test ${TESTS})
 endforeach(test)
 
 add_executable(
-  test_hook
-  test_hook.cpp
+  test_registry_updater
+  test_registry_updater.cpp
   ${MOCS}
-  ${CMAKE_SOURCE_DIR}/src/com/ubuntu/content/service/hook.cpp
+  ${CMAKE_SOURCE_DIR}/src/com/ubuntu/content/service/registry-updater.cpp
   ${CMAKE_SOURCE_DIR}/src/com/ubuntu/content/service/registry.cpp
   good.json
   bad.json
   source_all.json
 )
 
-qt5_use_modules(test_hook Core Gui DBus Test)
-target_link_libraries(test_hook content-hub ${GTEST_ALL_LIBRARIES} ${GSETTINGS_LDFLAGS})
-add_test(NAME test_hook COMMAND dbus-test-runner --task ${CMAKE_CURRENT_BINARY_DIR}/test_hook)
+qt5_use_modules(test_registry_updater Core Gui DBus Test)
+target_link_libraries(test_registry_updater content-hub ${GTEST_ALL_LIBRARIES} ${GSETTINGS_LDFLAGS})
+add_test(NAME test_registry_updater COMMAND dbus-test-runner --task ${CMAKE_CURRENT_BINARY_DIR}/test_registry_updater)
 
-SET_TESTS_PROPERTIES(test_hook
+SET_TESTS_PROPERTIES(test_registry_updater
   PROPERTIES ENVIRONMENT "CONTENT_HUB_TESTING=1")
 
 set_target_properties(
-  test_hook
+  test_registry_updater
   PROPERTIES
   AUTOMOC TRUE
 )
