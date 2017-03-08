@@ -20,6 +20,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QFile>
+#include <QFileSystemWatcher>
 #include <QDir>
 #include <QStandardPaths>
 #include <QTimer>
@@ -34,21 +35,11 @@ namespace cucd = com::ubuntu::content::detail;
 
 cucd::Hook::Hook(const QSharedPointer<cucd::PeerRegistry>& registry, QObject *parent) :
     QObject(parent),
-    registry(registry)
+    registry(registry),
+    watcher(new QFileSystemWatcher)
 {
-    QTimer::singleShot(200, this, SLOT(run()));
-}
-
-cucd::Hook::~Hook()
-{
-    TRACE() << Q_FUNC_INFO;
-}
-
-void cucd::Hook::run()
-{
-    TRACE() << Q_FUNC_INFO;
-    /* Looks for files in ${HOME}/.local/share/content-hub/${id} installed
-     * by click packages.  These files are JSON, for example:
+    /* Looks for files installed packages that define peer registration.
+     * These files are JSON, for example:
      *
      * {
      *     "source": [
@@ -60,16 +51,50 @@ void cucd::Hook::run()
      * The hook also iterates known peers and removes them if there is
      * no JSON file installed in this path.
      */
-
-    QVector<QDir> contentDirs;
-
     contentDirs.append(QDir(
         QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
         + QString("/")
         + QString("content-hub")));
-    
+
     contentDirs.append(QDir("/usr/share/content-hub/peers/"));
     contentDirs.append(QDir("/usr/share/local/content-hub/peers/"));
+
+    QStringList dirs;
+    Q_FOREACH(QDir d, contentDirs)
+    {
+        if (d.exists())
+            dirs << d.path();
+    }
+
+    watcher->addPaths(dirs);
+    qWarning() << watcher->directories();
+    connect(watcher.data(), SIGNAL(directoryChanged(const QString&)), SLOT(refresh(const QString&)));
+
+    QTimer::singleShot(200, this, SLOT(run()));
+}
+
+cucd::Hook::~Hook()
+{
+    TRACE() << Q_FUNC_INFO;
+}
+
+void cucd::Hook::refresh(const QString& dir)
+{
+    qWarning() << Q_FUNC_INFO << dir;
+    bool shouldRefresh = true;
+    /* Don't update the registry for temp files */
+    Q_FOREACH(QFileInfo f, QDir(dir).entryInfoList(QDir::Files))
+    {
+    	if (f.completeSuffix().contains("dpkg-"))
+            shouldRefresh = false;
+    }
+    if (shouldRefresh)
+        run();
+}
+
+void cucd::Hook::run()
+{
+    qWarning() << Q_FUNC_INFO;
 
     QStringList all_peers;
     registry->enumerate_known_peers([&all_peers](const cuc::Peer& peer)
@@ -101,9 +126,10 @@ void cucd::Hook::run()
         if (contentDir.exists()) 
         {
             peerDirsExist = true;
-
             Q_FOREACH(QFileInfo f, contentDir.entryInfoList(QDir::Files))
+            {
                 add_peer(f);
+            }
         }
 
     }
@@ -111,7 +137,6 @@ void cucd::Hook::run()
     if(!peerDirsExist)
         return_error("No peer setting directories exist.");
 
-    deleteLater();
 }
 
 bool cucd::Hook::add_peer(QFileInfo result)

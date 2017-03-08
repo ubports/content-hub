@@ -70,12 +70,13 @@ TEST(Hook, parse_json)
     WillRepeatedly(Return(true));
 
     QFileInfo f("good.json");
-    cucd::Hook *hook = new cucd::Hook(mock);
+    auto mock_ptr = QSharedPointer<cuc::detail::PeerRegistry>(mock);
+    cucd::Hook *hook = new cucd::Hook(mock_ptr);
 
     EXPECT_TRUE(hook->add_peer(f));
     f.setFile("bad.json");
     EXPECT_FALSE(hook->add_peer(f));
     f.setFile("source_all.json");
     EXPECT_TRUE(hook->add_peer(f));
-    delete mock;
+    mock_ptr.clear();
 }

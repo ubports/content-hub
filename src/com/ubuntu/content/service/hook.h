@@ -42,11 +42,14 @@ public:
 
 public Q_SLOTS:
     bool return_error(QString err = "");
+    void refresh(const QString&);
     void run();
     bool add_peer(QFileInfo);
 
 private:
     const QSharedPointer<com::ubuntu::content::detail::PeerRegistry>& registry;
+    QVector<QDir> contentDirs;
+    QScopedPointer<QFileSystemWatcher> watcher;
     
 };
 }
