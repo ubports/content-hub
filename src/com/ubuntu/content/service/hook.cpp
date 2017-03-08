@@ -67,7 +67,6 @@ cucd::Hook::Hook(const QSharedPointer<cucd::PeerRegistry>& registry, QObject *pa
     }
 
     watcher->addPaths(dirs);
-    qWarning() << watcher->directories();
     connect(watcher.data(), SIGNAL(directoryChanged(const QString&)), SLOT(refresh(const QString&)));
 
     QTimer::singleShot(200, this, SLOT(run()));
@@ -80,7 +79,7 @@ cucd::Hook::~Hook()
 
 void cucd::Hook::refresh(const QString& dir)
 {
-    qWarning() << Q_FUNC_INFO << dir;
+    TRACE() << Q_FUNC_INFO << dir;
     bool shouldRefresh = true;
     /* Don't update the registry for temp files */
     Q_FOREACH(QFileInfo f, QDir(dir).entryInfoList(QDir::Files))
@@ -94,7 +93,7 @@ void cucd::Hook::refresh(const QString& dir)
 
 void cucd::Hook::run()
 {
-    qWarning() << Q_FUNC_INFO;
+    TRACE() << Q_FUNC_INFO;
 
     QStringList all_peers;
     registry->enumerate_known_peers([&all_peers](const cuc::Peer& peer)
