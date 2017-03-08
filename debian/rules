@@ -11,9 +11,9 @@ CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
 LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 
 ifneq (,$(findstring cross,$(DEB_BUILD_PROFILES)))
-  PROJECT_DH_OPTIONS = --with click
+  PROJECT_DH_OPTIONS = 
 else
-  PROJECT_DH_OPTIONS = --with click,translations
+  PROJECT_DH_OPTIONS = --with translations
 endif
 
 ifneq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))

@@ -2,7 +2,6 @@ Source: content-hub
 Priority: optional
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Build-Depends: cmake,
-               click-dev,
                dbus-test-runner <!nocheck>,
                debhelper (>= 9),
                dh-apparmor,
