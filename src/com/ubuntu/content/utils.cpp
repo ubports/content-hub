@@ -212,12 +212,16 @@ bool app_id_matches(QString id, pid_t pid)
     auto app_id = ual::AppID::find(id.toStdString());
     if (app_id.empty())
         return false;
-    auto app = ual::Application::create(app_id, reg);
-    if (!app.get()->hasInstances())
-        return false;
-    Q_FOREACH (std::shared_ptr<ual::Application::Instance> instance, app.get()->instances()) {
-        if (instance.get()->hasPid(pid))
-            return true;
+    try {
+        auto app = ual::Application::create(app_id, reg);
+        if (!app.get()->hasInstances())
+            return false;
+        Q_FOREACH (std::shared_ptr<ual::Application::Instance> instance, app.get()->instances()) {
+            if (instance.get()->hasPid(pid))
+                return true;
+        }
+    } catch (...) {
+        qWarning() << Q_FUNC_INFO << "Failed to create Application for" << id;
     }
     return false;
 }
