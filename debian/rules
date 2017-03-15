@@ -42,6 +42,7 @@ ifneq (,$(findstring nocheck,$(DEB_BUILD_PROFILES)))
 endif
 	dh_auto_install
 	dh_apparmor -pcontent-hub-testability --profile-name=content-hub-testability
+	mkdir -p debian/tmp/var/cache/content-hub/peers
 
 override_dh_translations:
 	make -C po content-hub.pot

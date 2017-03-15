@@ -6,3 +6,4 @@ usr/share/locale/*/LC_MESSAGES/content-hub.mo
 usr/share/applications/content-hub-send.desktop
 usr/share/url-dispatcher/urls/content-hub-send.url-dispatcher
 usr/share/content-hub/icons
+var/cache/content-hub/peers
