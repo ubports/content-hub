@@ -58,6 +58,7 @@ cucd::RegistryUpdater::RegistryUpdater(const QSharedPointer<cucd::PeerRegistry>&
 
     contentDirs.append(QDir("/usr/share/content-hub/peers/"));
     contentDirs.append(QDir("/usr/share/local/content-hub/peers/"));
+    contentDirs.append(QDir("/var/cache/content-hub/peers/"));
 
     QStringList dirs;
     Q_FOREACH(QDir d, contentDirs)
