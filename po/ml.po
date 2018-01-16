@@ -1,0 +1,83 @@
+# Malayalam translation for content-hub
+# Copyright (c) 2018 Rosetta Contributors and Canonical Ltd 2018
+# This file is distributed under the same license as the content-hub package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: content-hub\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2014-08-14 12:39+0100\n"
+"PO-Revision-Date: 2018-01-15 11:54+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Malayalam <ml@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2018-01-16 05:35+0000\n"
+"X-Generator: Launchpad (build 18532)\n"
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:48
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:49
+msgid "Choose from"
+msgstr ""
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:48
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:49
+msgid "Open with"
+msgstr ""
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:48
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:49
+msgid "Share to"
+msgstr ""
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:158
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:175
+msgid "Apps"
+msgstr ""
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:194
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:211
+msgid ""
+"Sorry, there aren't currently any apps installed that can provide this type "
+"of content."
+msgstr ""
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:194
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:211
+msgid ""
+"Sorry, there aren't currently any apps installed that can handle this type "
+"of content."
+msgstr ""
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:210
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:227
+msgid "Devices"
+msgstr ""
+
+#: import/Ubuntu/Content/ContentPeerPicker10.qml:247
+#: import/Ubuntu/Content/ContentPeerPicker11.qml:56
+#: import/Ubuntu/Content/ContentTransferHint.qml:65
+msgid "Cancel"
+msgstr ""
+
+#: import/Ubuntu/Content/ContentTransferHint.qml:52
+msgid "Transfer in progress"
+msgstr ""
+
+#: src/com/ubuntu/content/detail/service.cpp:216
+msgid "Download Complete"
+msgstr ""
+
+#: src/com/ubuntu/content/detail/service.cpp:234
+msgid "Open"
+msgstr ""
+
+#: src/com/ubuntu/content/detail/service.cpp:241
+msgid "Dismiss"
+msgstr ""
+
+#: src/com/ubuntu/content/detail/service.cpp:259
+msgid "Download Failed"
+msgstr ""
