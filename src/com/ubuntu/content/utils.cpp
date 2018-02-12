@@ -34,7 +34,7 @@
 #include "debug.h"
 #include "com/ubuntu/content/type.h"
 #include <unistd.h>
-#include <liblibertine/libertine.h>
+//#include <liblibertine/libertine.h>
 #include <ubuntu-app-launch/appid.h>
 #include <ubuntu-app-launch/application.h>
 #include <ubuntu-app-launch/registry.h>
@@ -416,6 +416,8 @@ bool check_profile_read(QString profile, QString path)
 
 QString shared_dir_for_peer(QString peer)
 {
+    return QString();
+    /*
     TRACE() << Q_FUNC_INFO << "PEER:" << peer;
     QString container = peer.split("_")[0];
     if (container.isEmpty())
@@ -425,6 +427,7 @@ QString shared_dir_for_peer(QString peer)
         return QString();
     QString path = home_path + "/shared";
     return path;
+    */
 }
 
 }

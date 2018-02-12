@@ -23,7 +23,7 @@
 #include <QVector>
 #include <com/ubuntu/content/type.h>
 #include <gio/gdesktopappinfo.h>
-#include <libertine.h>
+//#include <libertine.h>
 #include <ubuntu-app-launch.h>
 
 // Begin anonymous namespace
@@ -44,6 +44,7 @@ cuc::Type mime_to_wellknown_type (const char * type)
     return cuc::Type::unknown();
 }
 
+/*
 QMap<QString, QVector<QString>> libertine_apps()
 {
     TRACE() << Q_FUNC_INFO;
@@ -90,7 +91,7 @@ QMap<QString, QVector<QString>> libertine_apps()
 
                 if (not g_app_info_should_show (G_APP_INFO(appInfo)))
                     continue;
-                */
+
 
                 gchar ** types = g_key_file_get_locale_string_list(key_file,
                                                                    G_KEY_FILE_DESKTOP_GROUP,
@@ -139,7 +140,7 @@ QStringList libertine_app_ids(QString type)
 
     return results;
 }
-
+*/
 } // End anonymous namespace
 
 Registry::Registry() :
@@ -296,7 +297,7 @@ void Registry::enumerate_known_destinations_for_type(cuc::Type type, const std::
     if (type != cuc::Type::unknown() && valid_type(type))
         peers << m_dests->get(type.id()).toStringList();
 
-    peers << libertine_app_ids(type.id());
+    //peers << libertine_app_ids(type.id());
 
     Q_FOREACH (QString k, peers)
     {
@@ -315,7 +316,7 @@ void Registry::enumerate_known_shares_for_type(cuc::Type type, const std::functi
     QStringList peers;
     peers << m_shares->get(type.id()).toStringList();
 
-    peers << libertine_app_ids(type.id());
+    //peers << libertine_app_ids(type.id());
 
     Q_FOREACH (QString k, peers)
     {
@@ -408,5 +409,6 @@ bool Registry::remove_peer(cuc::Peer peer)
 }
 bool Registry::peer_is_legacy(QString peer_id)
 {
-    return libertine_app_ids("all").contains(peer_id);
+    //return libertine_app_ids("all").contains(peer_id);
+    return false;
 }

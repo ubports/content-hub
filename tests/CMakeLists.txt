@@ -20,7 +20,7 @@ include_directories (
   ${CMAKE_SOURCE_DIR}/src
   ${CMAKE_SOURCE_DIR}/src/com/ubuntu/content
   ${GIO_INCLUDE_DIRS}
-  ${LIBERTINE_INCLUDE_DIRS}
+#  ${LIBERTINE_INCLUDE_DIRS}
   ${UBUNTU_LAUNCH_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}/src
   ${CMAKE_BINARY_DIR}/src/com/ubuntu/content

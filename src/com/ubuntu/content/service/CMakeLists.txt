@@ -29,7 +29,7 @@ include_directories(
   ${GSETTINGS_INCLUDE_DIRS}
   ${UBUNTU_LAUNCH_INCLUDE_DIRS}
   ${MIRCLIENT_INCLUDE_DIRS}
-  ${LIBERTINE_INCLUDE_DIRS}
+#  ${LIBERTINE_INCLUDE_DIRS}
 )
 
 add_executable(
@@ -53,12 +53,12 @@ qt5_use_modules(content-hub-service Core DBus Gui)
 
 target_link_libraries(
   content-hub-service
- 
+
   content-hub
   ${GIO_LDFLAGS}
   ${GSETTINGS_LDFLAGS}
   ${UBUNTU_LAUNCH_LDFLAGS}
-  ${LIBERTINE_LDFLAGS}
+#  ${LIBERTINE_LDFLAGS}
 )
 
 install(
