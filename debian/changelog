@@ -1,3 +1,9 @@
+content-hub (0.4+ubports) bionic; urgency=medium
+
+  * Imported to UBports
+
+ -- UBports auto importer <infra@ubports.com>  Mon, 12 Feb 2018 11:44:41 +0100
+
 content-hub (0.3+17.04.20170403-0ubuntu1) zesty; urgency=medium
 
   * mir-helper: transition deprecated functions from mir 0.26 to the non-
