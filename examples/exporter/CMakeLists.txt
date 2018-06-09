@@ -23,7 +23,7 @@ add_executable(
   exampleexporter.cpp
 )
 
-qt5_use_modules(exporter Core Gui DBus)
+target_link_libraries(exporter Qt5::Core Qt5::Gui Qt5::DBus)
 
 set_target_properties(
   exporter

@@ -112,7 +112,7 @@ set_target_properties(
   AUTOMOC TRUE
 )
 
-qt5_use_modules(content-hub Core DBus Gui)
+target_link_libraries(content-hub Qt5::Core Qt5::DBus Qt5::Gui)
 
 target_link_libraries(content-hub
     ${UBUNTU_LAUNCH_LDFLAGS}

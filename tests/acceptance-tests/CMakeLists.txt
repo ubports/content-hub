@@ -58,7 +58,8 @@ foreach(test ${TESTS})
   add_executable(${test}
     ${${test}_SOURCES}
   )
-  qt5_use_modules(${test} Core Gui DBus Test)
+  find_package(Qt5Test REQUIRED)
+  target_link_libraries(${test} Qt5::Core Qt5::Gui Qt5::DBus Qt5::Test)
 
   target_link_libraries(${test}
     ${TEST_LIBS}
@@ -81,7 +82,7 @@ add_executable(
   source_all.json
 )
 
-qt5_use_modules(test_registry_updater Core Gui DBus Test)
+target_link_libraries(test_registry_updater Qt5::Core Qt5::Gui Qt5::DBus Qt5::Test)
 target_link_libraries(test_registry_updater content-hub ${GTEST_ALL_LIBRARIES} ${GSETTINGS_LDFLAGS})
 add_test(NAME test_registry_updater COMMAND dbus-test-runner --task ${CMAKE_CURRENT_BINARY_DIR}/test_registry_updater)
 

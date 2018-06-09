@@ -27,7 +27,10 @@ add_executable(
   ${RESOURCES}
 )
 
-qt5_use_modules(content-hub-peer-picker Core Gui Quick Qml Widgets)
+find_package(Qt5Quick REQUIRED)
+find_package(Qt5Qml REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+target_link_libraries(content-hub-peer-picker Qt5::Core Qt5::Gui Qt5::Quick Qt5::Qml Qt5::Widgets)
 
 set_target_properties(
   content-hub-peer-picker
