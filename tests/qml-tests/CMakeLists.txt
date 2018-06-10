@@ -15,7 +15,9 @@
 set(TEST tst_QmlTests)
 set(XVFB_CMD xvfb-run -a -s "-screen 0 640x480x24")
 add_executable(${TEST} tst_QmlTests.cpp)
-qt5_use_modules(${TEST} Core Qml Quick Test QuickTest)
+find_package(Qt5Quick REQUIRED)
+find_package(Qt5QuickTest REQUIRED)
+target_link_libraries(${TEST} Qt5::Core Qt5::Qml Qt5::Quick Qt5::Test Qt5::QuickTest)
 add_test(NAME ${TEST} COMMAND ${XVFB_CMD} ${CMAKE_CURRENT_BINARY_DIR}/${TEST})
 set_tests_properties(${TEST} PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=minimal;QML2_IMPORT_PATH=${CMAKE_BINARY_DIR}/import;APP_ID=com.some.app.for.testing")
 

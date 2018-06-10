@@ -23,7 +23,7 @@ add_executable(
   autoexporter.cpp
 )
 
-qt5_use_modules(content-hub-test-exporter Core Gui DBus)
+target_link_libraries(content-hub-test-exporter Qt5::Core Qt5::Gui Qt5::DBus)
 pkg_check_modules(APPARMOR REQUIRED libapparmor)
 
 set_target_properties(

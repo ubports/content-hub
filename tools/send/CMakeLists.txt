@@ -29,7 +29,7 @@ add_executable(
   ${CMAKE_SOURCE_DIR}/src/com/ubuntu/content/debug.cpp
 )
 
-qt5_use_modules(content-hub-send Core Gui DBus)
+target_link_libraries(content-hub-send Qt5::Core Qt5::Gui Qt5::DBus)
 
 set_target_properties(
   content-hub-send

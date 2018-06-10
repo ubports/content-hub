@@ -23,7 +23,7 @@ add_executable(
   autosharer.cpp
 )
 
-qt5_use_modules(content-hub-test-sharer Core Gui DBus)
+target_link_libraries(content-hub-test-sharer Qt5::Core Qt5::Gui Qt5::DBus)
 
 set_target_properties(
   content-hub-test-sharer

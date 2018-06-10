@@ -49,7 +49,7 @@ set_target_properties(
   AUTOMOC TRUE
 )
 
-qt5_use_modules(content-hub-service Core DBus Gui)
+target_link_libraries(content-hub-service Qt5::Core Qt5::DBus Qt5::Gui)
 
 target_link_libraries(
   content-hub-service

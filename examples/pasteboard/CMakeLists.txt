@@ -22,7 +22,7 @@ add_executable(
   copy.cpp
 )
 
-qt5_use_modules(copy-to-pasteboard Core Gui DBus)
+target_link_libraries(copy-to-pasteboard Qt5::Core Qt5::Gui Qt5::DBus)
 
 set_target_properties(
   copy-to-pasteboard
@@ -41,7 +41,7 @@ add_executable(
   paste.cpp
 )
 
-qt5_use_modules(paste-from-pasteboard Core Gui DBus)
+target_link_libraries(paste-from-pasteboard Qt5::Core Qt5::Gui Qt5::DBus)
 
 set_target_properties(
   paste-from-pasteboard
