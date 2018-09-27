@@ -14,6 +14,9 @@
 #
 # Authored by: Thomas Voss <thomas.voss@canonical.com>
 
+find_package(Gtest REQUIRED)
+enable_testing()
+
 add_definitions(-DQT_NO_KEYWORDS)
 
 include_directories (
