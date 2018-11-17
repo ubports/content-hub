@@ -43,7 +43,7 @@ Item {
     */    
     property var activeTransfer
 
-    //opacity: internal.isTransferRunning ? 1.0 : 0.0
+    opacity: internal.isTransferRunning ? 1.0 : 0.0
 
     Component {
         id: dialog
