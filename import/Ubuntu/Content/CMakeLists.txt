@@ -95,7 +95,7 @@ endif()
 
 if(NOT CMAKE_CROSSCOMPILING)
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/plugins.qmltypes
-    COMMAND qmlplugindump -qt=qt5 -noinstantiate -notrelocatable Ubuntu.Content 1.1 ../../ > ${CMAKE_CURRENT_BINARY_DIR}/plugins.qmltypes
+    COMMAND qmlplugindump-qt5 -noinstantiate -notrelocatable Ubuntu.Content 1.1 ../../ > ${CMAKE_CURRENT_BINARY_DIR}/plugins.qmltypes
     DEPENDS ${PLUGIN}
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
