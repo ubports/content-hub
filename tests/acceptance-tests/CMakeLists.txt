@@ -39,7 +39,7 @@ set(TESTS
 )
 
 set(TEST_LIBS
-  ${GMOCK_LIBRARY}
+  ${GMOCK_LIBRARIES}
   ${GTEST_BOTH_LIBRARIES}
   content-hub
 )
@@ -83,7 +83,7 @@ add_executable(
 )
 
 target_link_libraries(test_registry_updater Qt5::Core Qt5::Gui Qt5::DBus Qt5::Test)
-target_link_libraries(test_registry_updater content-hub ${GTEST_ALL_LIBRARIES} ${GSETTINGS_LDFLAGS})
+target_link_libraries(test_registry_updater ${TEST_LIBS} ${GSETTINGS_LDFLAGS})
 add_test(NAME test_registry_updater COMMAND dbus-test-runner --task ${CMAKE_CURRENT_BINARY_DIR}/test_registry_updater)
 
 SET_TESTS_PROPERTIES(test_registry_updater
