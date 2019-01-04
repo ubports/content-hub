@@ -107,11 +107,12 @@ Item {
     Component {
         id: peerDelegate
         Item {
-            width: units.gu(13.5)
+            width: units.gu(11)
             height: units.gu(16)
             AbstractButton {
                 width: parent.width
                 height: icon.height + label.height
+
                 UbuntuShape {
                     id: icon
                     anchors {
@@ -131,7 +132,7 @@ Item {
                         cache: false
                         source: "image://content-hub/" + modelData.appId
                     }
-               }
+                }
 
                 Label {
                     id: label
@@ -191,7 +192,7 @@ Item {
                 delegateWidth: units.gu(11)
                 delegateHeight: units.gu(11)
                 verticalSpacing: units.gu(2)
-                model: customPeerModelLoader ? customPeerModelLoader.item.peers : peerModelLoader.item.peers
+                model: customPeerModelLoader ? customPeerModelLoader.item.peers : peerModelLoader.item.peers //This line give error "TypeError: Cannot read property 'peers' of null" > Move to onCompleted?
                 delegate: peerDelegate
 
                 Label {
