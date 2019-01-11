@@ -47,10 +47,11 @@ Item {
     GridView {
         id: gridView
         objectName: "responsiveGridViewGrid"
+
         anchors {
             fill: parent
-            leftMargin: margin/2
-            rightMargin: margin/2
+            leftMargin: margin/2 + horizontalSpacing/2
+            rightMargin: margin/2 - horizontalSpacing/2
             topMargin: verticalSpacing
         }
 
@@ -64,7 +65,7 @@ Item {
 
         function spacingForColumns(columns) {
             // spacing between columns as an integer number of GU, the remainder goes in the margins
-            var spacingGU = pixelToGU(allocatableHorizontalSpace / columns);
+            var spacingGU = pixelToGU(allocatableHorizontalSpace / (columns+1));
             return units.gu(spacingGU);
         }
 
