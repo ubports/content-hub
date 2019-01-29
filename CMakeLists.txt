@@ -21,8 +21,8 @@ project (content-hub C CXX)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 include (GNUInstallDirs)
-include (EnableCoverageReport)
-include (GSettings)
+find_package(CoverageReport)
+find_package(GSettings)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -pthread")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -fno-strict-aliasing -fPIC -pthread -Wno-unused-function")

@@ -14,7 +14,7 @@
 #
 # Authored by: Thomas Voss <thomas.voss@canonical.com>
 
-find_package(Gtest REQUIRED)
+find_package(GMock REQUIRED)
 enable_testing()
 
 add_definitions(-DQT_NO_KEYWORDS)
@@ -28,7 +28,6 @@ include_directories (
   ${CMAKE_BINARY_DIR}/src
   ${CMAKE_BINARY_DIR}/src/com/ubuntu/content
   ${GMOCK_INCLUDE_DIR}
-  ${GTEST_INCLUDE_DIR}
   ${MIRCLIENT_INCLUDE_DIR}
 )
 
