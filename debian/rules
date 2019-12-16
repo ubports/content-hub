@@ -10,13 +10,36 @@ CFLAGS:=$(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
 CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
 LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 
+ifneq (,$(findstring cross,$(DEB_BUILD_PROFILES)))
+  PROJECT_DH_OPTIONS = --with click
+else
+  PROJECT_DH_OPTIONS = --with click,translations
+endif
+
+ifneq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
+  CONFIGURE_OPTS += -DENABLE_TESTS=OFF
+  DEB_BUILD_PROFILES += noinsttest
+endif
+
+ifneq (,$(findstring nodoc,$(DEB_BUILD_OPTIONS)))
+  CONFIGURE_OPTS += -DENABLE_DOC=OFF
+endif
+
 %:
-	dh $@ --with click,translations --fail-missing -- -B build
+	dh $@ $(PROJECT_DH_OPTIONS) --fail-missing -- -B build
+
+override_dh_auto_configure:
+	dh_auto_configure -- $(CONFIGURE_OPTS)
 
 override_dh_auto_test:
+ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
 	make -C build/tests/acceptance-tests test
+endif
 
 override_dh_auto_install:
+ifneq (,$(findstring nocheck,$(DEB_BUILD_PROFILES)))
+	mkdir -p debian/content-hub-testability
+endif
 	dh_auto_install
 	dh_apparmor -pcontent-hub-testability --profile-name=content-hub-testability
 

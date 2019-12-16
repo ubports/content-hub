@@ -22,13 +22,15 @@ macro(add_schema SCHEMA_NAME)
         SET (GSETTINGS_DIR "${_glib_prefix}/share/glib-2.0/schemas/")
     endif (GSETTINGS_LOCALINSTALL)
 
-    # Run the validator and error if it fails
-    execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable glib_compile_schemas  OUTPUT_VARIABLE _glib_comple_schemas OUTPUT_STRIP_TRAILING_WHITESPACE)
-    execute_process (COMMAND ${_glib_comple_schemas} --dry-run --schema-file=${CMAKE_CURRENT_SOURCE_DIR}/${SCHEMA_NAME} ERROR_VARIABLE _schemas_invalid OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if (GSETTINGS_COMPILE)
+      # Run the validator and error if it fails
+      execute_process (COMMAND ${PKG_CONFIG_EXECUTABLE} gio-2.0 --variable glib_compile_schemas  OUTPUT_VARIABLE _glib_comple_schemas OUTPUT_STRIP_TRAILING_WHITESPACE)
+      execute_process (COMMAND ${_glib_comple_schemas} --dry-run --schema-file=${CMAKE_CURRENT_SOURCE_DIR}/${SCHEMA_NAME} ERROR_VARIABLE _schemas_invalid OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-    if (_schemas_invalid)
-      message (SEND_ERROR "Schema validation error: ${_schemas_invalid}")
-    endif (_schemas_invalid)
+      if (_schemas_invalid)
+        message (SEND_ERROR "Schema validation error: ${_schemas_invalid}")
+      endif (_schemas_invalid)
+    endif ()
 
     # Actually install and recomple schemas
     message (STATUS "GSettings schemas will be installed into ${GSETTINGS_DIR}")
