@@ -20,8 +20,10 @@ project(content-hub)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+option(ENABLE_TESTS "Build tests" ON)
+option(ENABLE_DOC "Build documentation" ON)
+
 include (GNUInstallDirs)
-include (EnableCoverageReport)
 include (GSettings)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC -pthread")
@@ -35,26 +37,6 @@ if (EXISTS "/etc/debian_version")
 endif()
 
 set(pkglibexecdir "${CMAKE_INSTALL_FULL_LIBEXECDIR}")
-
-
-#####################################################################
-# Enable code coverage calculation with gcov/gcovr/lcov
-# Usage:
-#  * Switch build type to coverage (use ccmake or cmake-gui)
-#  * Invoke make, make test, make coverage
-#  * Find html report in subdir coveragereport
-#  * Find xml report feasible for jenkins in coverage.xml
-#####################################################################
-IF(CMAKE_BUILD_TYPE MATCHES [cC][oO][vV][eE][rR][aA][gG][eE])
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage -fprofile-arcs" )
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ftest-coverage -fprofile-arcs" )
-  SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -ftest-coverage -fprofile-arcs" )
-  SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -ftest-coverage -fprofile-arcs" )
-ENDIF(CMAKE_BUILD_TYPE MATCHES [cC][oO][vV][eE][rR][aA][gG][eE])
-
-find_package(Gtest REQUIRED)
-include_directories(${GMOCK_INCLUDE_DIR} ${GTEST_INCLUDE_DIR})
-enable_testing()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -101,12 +83,13 @@ list(SORT I18N_CPP_SRC_FILES)
 # (regarding syntax consistency, see http://pad.lv/1181187)
 set (GETTEXT_PACKAGE "content-hub")
 
-add_subdirectory(doc)
+if (${ENABLE_DOC})
+  add_subdirectory(doc)
+endif()
 add_subdirectory(po)
 add_subdirectory(src)
 add_subdirectory(import)
 add_subdirectory(examples)
-add_subdirectory(tests)
 add_subdirectory(tools)
 
 install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_PREFIX})
@@ -125,10 +108,35 @@ install(FILES
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 )
 
+if (${ENABLE_TESTS})
+  include (EnableCoverageReport)
+
+  #####################################################################
+  # Enable code coverage calculation with gcov/gcovr/lcov
+  # Usage:
+  #  * Switch build type to coverage (use ccmake or cmake-gui)
+  #  * Invoke make, make test, make coverage
+  #  * Find html report in subdir coveragereport
+  #  * Find xml report feasible for jenkins in coverage.xml
+  #####################################################################
+  IF(CMAKE_BUILD_TYPE MATCHES [cC][oO][vV][eE][rR][aA][gG][eE])
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage -fprofile-arcs" )
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ftest-coverage -fprofile-arcs" )
+    SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -ftest-coverage -fprofile-arcs" )
+    SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -ftest-coverage -fprofile-arcs" )
+  ENDIF(CMAKE_BUILD_TYPE MATCHES [cC][oO][vV][eE][rR][aA][gG][eE])
+
+  find_package(Gtest REQUIRED)
+  include_directories(${GMOCK_INCLUDE_DIR} ${GTEST_INCLUDE_DIR})
+  enable_testing()
+
+  add_subdirectory(tests)
+
 # There's no nice way to format this. Thanks CMake.
-add_test(LGPL-required
-  /bin/sh -c "! grep -rl 'GNU General' ${PROJECT_SOURCE_DIR}/src/client ${PROJECT_SOURCE_DIR}/include/client ${PROJECT_SOURCE_DIR}/src/shared ${PROJECT_SOURCE_DIR}/include/shared"
-)
-add_test(GPL-required
-  /bin/sh -c "! grep -rl 'GNU Lesser' ${PROJECT_SOURCE_DIR}/src/server ${PROJECT_SOURCE_DIR}/include/server ${PROJECT_SOURCE_DIR}/include/test ${PROJECT_SOURCE_DIR}/tests ${PROJECT_SOURCE_DIR}/examples"
-)
+  add_test(LGPL-required
+    /bin/sh -c "! grep -rl 'GNU General' ${PROJECT_SOURCE_DIR}/src/client ${PROJECT_SOURCE_DIR}/include/client ${PROJECT_SOURCE_DIR}/src/shared ${PROJECT_SOURCE_DIR}/include/shared"
+  )
+  add_test(GPL-required
+    /bin/sh -c "! grep -rl 'GNU Lesser' ${PROJECT_SOURCE_DIR}/src/server ${PROJECT_SOURCE_DIR}/include/server ${PROJECT_SOURCE_DIR}/include/test ${PROJECT_SOURCE_DIR}/tests ${PROJECT_SOURCE_DIR}/examples"
+  )
+endif()
