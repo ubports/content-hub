@@ -26,9 +26,6 @@ add_definitions(-DQT_NO_KEYWORDS)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}
-    ${NIH_INCLUDE_DIRS}
-    ${NIH_DBUS_INCLUDE_DIRS}
-    ${DBUS_INCLUDE_DIRS}
     ${GLIB_INCLUDE_DIRS}
     ${UBUNTU_LAUNCH_INCLUDE_DIRS}
 )
@@ -70,8 +67,6 @@ qt5_use_modules(${PLUGIN} Core Qml Quick DBus)
 target_link_libraries(
     ${PLUGIN}
     content-hub
-    ${NIH_LIBRARIES}
-    ${NIH_DBUS_LIBRARIES}
     ${GLIB_LIBRARIES}
     ${UBUNTU_LAUNCH_LDFLAGS}
 )

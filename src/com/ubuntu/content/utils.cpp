@@ -27,8 +27,6 @@
 #include <QtDBus/QDBusMessage>
 #include <QtDBus/QDBusConnection>
 #include <QUrl>
-#include <nih/alloc.h>
-#include <nih-dbus/dbus_util.h>
 
 #include "common.h"
 #include "debug.h"
@@ -165,14 +163,25 @@ bool valid_type(cuc::Type type)
     return false;
 }
 
+QString appid_dbus_path(const QString& applicationId, const QString& prefix = "/")
+{
+    QString objectPath = QString(prefix);
+    for (int i = 0; i < applicationId.size(); ++i) {
+        QChar ch = applicationId.at(i);
+        if (ch.isLetterOrNumber()) {
+            objectPath += ch;
+        } else {
+            objectPath += QString::asprintf("_%02x", ch.toLatin1());
+        }
+    }
+    return objectPath;
+}
+
 /* sanitize the dbus names */
 QString sanitize_id(const QString& appId)
 {
     TRACE() << Q_FUNC_INFO;
-    return QString(nih_dbus_path(NULL,
-                                 "",
-                                 appId.toLocal8Bit().data(),
-                                 NULL)).remove(0, 1);
+    return appid_dbus_path(appId).remove(0, 1);
 }
 
 /* define a bus_name based on our namespace and the app_id */
@@ -183,10 +192,7 @@ QString handler_address(QString app_id)
 
 QString handler_path(QString app_id)
 {
-    return nih_dbus_path(NULL,
-                         HANDLER_BASE_PATH.data(),
-                         app_id.toLocal8Bit().data(),
-                         NULL);
+    return appid_dbus_path(app_id, HANDLER_BASE_PATH);
 }
 
 
