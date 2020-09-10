@@ -16,6 +16,10 @@
 
 add_subdirectory(service)
 
+if(LIBERTINE_FOUND)
+   add_definitions(-DWITH_LIBERTINE)
+endif()
+
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_SOURCE_DIR}/src

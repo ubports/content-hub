@@ -23,8 +23,11 @@
 #include <QVector>
 #include <com/ubuntu/content/type.h>
 #include <gio/gdesktopappinfo.h>
-#include <libertine.h>
 #include <ubuntu-app-launch.h>
+
+#ifdef WITH_LIBERTINE
+#include <libertine.h>
+#endif
 
 // Begin anonymous namespace
 namespace {
@@ -46,6 +49,7 @@ cuc::Type mime_to_wellknown_type (const char * type)
     return cuc::Type::unknown();
 }
 
+#ifdef WITH_LIBERTINE
 QMap<QString, QVector<QString>> libertine_apps()
 {
     TRACE() << Q_FUNC_INFO;
@@ -141,6 +145,7 @@ QStringList libertine_app_ids(QString type)
 
     return results;
 }
+#endif
 
 } // End anonymous namespace
 
@@ -298,7 +303,9 @@ void Registry::enumerate_known_destinations_for_type(cuc::Type type, const std::
     if (type != cuc::Type::unknown() && valid_type(type))
         peers << m_dests->get(type.id()).toStringList();
 
+#ifdef WITH_LIBERTINE
     peers << libertine_app_ids(type.id());
+#endif
 
     Q_FOREACH (QString k, peers)
     {
@@ -317,7 +324,9 @@ void Registry::enumerate_known_shares_for_type(cuc::Type type, const std::functi
     QStringList peers;
     peers << m_shares->get(type.id()).toStringList();
 
+#ifdef WITH_LIBERTINE
     peers << libertine_app_ids(type.id());
+#endif
 
     Q_FOREACH (QString k, peers)
     {
@@ -410,5 +419,9 @@ bool Registry::remove_peer(cuc::Peer peer)
 }
 bool Registry::peer_is_legacy(QString peer_id)
 {
+#ifdef WITH_LIBERTINE
     return libertine_app_ids("all").contains(peer_id);
+#else
+    return false;
+#endif
 }
