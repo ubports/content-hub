@@ -31,7 +31,10 @@
 #include <com/ubuntu/content/scope.h>
 #include <com/ubuntu/content/store.h>
 #include <com/ubuntu/content/type.h>
+
+#ifdef WITH_LIBERTINE
 #include <libertine.h>
+#endif
 
 #include <QDBusPendingCallWatcher>
 #include <QIcon>
@@ -74,6 +77,7 @@ cuc::Hub::Hub(QObject* parent) : QObject(parent), d{new cuc::Hub::Private{this}}
     if (qApp)
         qApp->installEventFilter(this);
 
+#ifdef WITH_LIBERTINE
     /* Append icon paths from the libertine containers */
     QStringList iconPaths = QIcon::themeSearchPaths();
     gchar ** containers = libertine_list_containers();
@@ -82,6 +86,7 @@ cuc::Hub::Hub(QObject* parent) : QObject(parent), d{new cuc::Hub::Private{this}}
         iconPaths << QString(path + "/usr/share/icons/");
     }
     QIcon::setThemeSearchPaths(iconPaths);
+#endif
 
     QObject::connect(d->service, &com::ubuntu::content::dbus::Service::PasteFormatsChanged,
             this, &cuc::Hub::Hub::onPasteFormatsChanged);

@@ -34,10 +34,13 @@
 #include "debug.h"
 #include "com/ubuntu/content/type.h"
 #include <unistd.h>
-#include <liblibertine/libertine.h>
 #include <ubuntu-app-launch/appid.h>
 #include <ubuntu-app-launch/application.h>
 #include <ubuntu-app-launch/registry.h>
+
+#ifdef WITH_LIBERTINE
+#include <libertine.h>
+#endif
 
 #include <sys/apparmor.h>
 /* need to be exposed in libapparmor but for now ... */
@@ -395,6 +398,7 @@ bool check_profile_read(QString profile, QString path)
 QString shared_dir_for_peer(QString peer)
 {
     TRACE() << Q_FUNC_INFO << "PEER:" << peer;
+#ifdef WITH_LIBERTINE
     QString container = peer.split("_")[0];
     if (container.isEmpty())
         return QString();
@@ -403,6 +407,9 @@ QString shared_dir_for_peer(QString peer)
         return QString();
     QString path = home_path + "/shared";
     return path;
+#else
+    return QString();
+#endif
 }
 
 }

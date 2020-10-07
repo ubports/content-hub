@@ -16,6 +16,10 @@
 
 add_definitions(-DQT_NO_KEYWORDS)
 
+if(LIBERTINE_FOUND)
+   add_definitions(-DWITH_LIBERTINE)
+endif()
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 qt5_add_dbus_adaptor(
