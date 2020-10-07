@@ -56,9 +56,9 @@ pkg_check_modules(APPARMOR REQUIRED libapparmor)
 
 pkg_check_modules(LIBERTINE libertine)
 if(LIBERTINE_FOUND)
-   message("Bulding with libertine support")
+   message("Building with libertine support")
 else()
-   message(WARNING "Bulding without libertine support")
+   message(WARNING "Building without libertine support")
 endif()
 
 add_definitions(-DDEBUG_ENABLED)
