@@ -19,6 +19,7 @@ import Ubuntu.Components 1.1
 import Ubuntu.Components.Popups 0.1
 import Ubuntu.Components.ListItems 0.1 as ListItem
 import Ubuntu.Content 1.1
+import "."
 
 /*!
   \internal
