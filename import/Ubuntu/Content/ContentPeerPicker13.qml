@@ -193,7 +193,8 @@ Item {
                 delegateWidth: units.gu(11)
                 delegateHeight: units.gu(11)
                 verticalSpacing: units.gu(2)
-                model: customPeerModelLoader ? customPeerModelLoader.item.peers : peerModelLoader.item.peers //This line give error "TypeError: Cannot read property 'peers' of null" > Move to onCompleted?
+                model: customPeerModelLoader ? customPeerModelLoader.item.peers
+                                             : peerModelLoader.item ? peerModelLoader.item.peers : null
                 delegate: peerDelegate
 
                 Label {

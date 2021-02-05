@@ -56,7 +56,7 @@ Item {
         }
 
         onModelChanged: {
-            clip = parent.height != contentHeightForRows(Math.ceil(model.count / columns))
+            clip = model && parent.height != contentHeightForRows(Math.ceil(model.count / columns))
         }
 
         function pixelToGU(value) {
